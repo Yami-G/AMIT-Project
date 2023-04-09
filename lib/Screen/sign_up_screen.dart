@@ -5,8 +5,14 @@ import '../Service/validation_class.dart';
 import '../widgets/validation_row.dart';
 import 'home_screen.dart';
 
-class SignUpScreen extends StatelessWidget {
-  final ValueNotifier<bool> status = ValueNotifier(true);
+class SignUpScreen extends StatefulWidget {
+  SignUpScreen({Key? key}) : super(key: key);
+
+  @override
+  State<SignUpScreen> createState() => _SignUpScreenState();
+}
+
+class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -15,7 +21,28 @@ class SignUpScreen extends StatelessWidget {
   String? _phoneNumber;
   String? _email;
   String? _password;
-  SignUpScreen({Key? key}) : super(key: key);
+  bool _status = true;
+
+  statusValue() {
+    _status = !_status;
+  }
+
+  @override
+  void setState(VoidCallback fn) {
+    statusValue();
+    super.setState(fn);
+  }
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    phoneController.dispose();
+    passwordController.dispose();
+    passwordController.dispose();
+    rePasswordController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -131,56 +158,53 @@ class SignUpScreen extends StatelessWidget {
                 SizedBox(
                   height: 15.h,
                 ),
-                ValueListenableBuilder(
-                  valueListenable: status,
-                  builder: (context, value, child) => Column(
-                    children: [
-                      ValidationRow(
-                        maxLine: 1,
-                        textLength: 8,
-                        obscureText: status.value,
-                        filled: true,
-                        passwordIconOnTap: () {
-                          status.value = !status.value;
-                        },
-                        isShowWidget: false,
-                        showPasswordIcon: status.value ? Icons.visibility_off_sharp : Icons.visibility,
-                        isShowPasswordIcon: true,
-                        labelText: 'Password*',
-                        textEditingController: passwordController,
-                        validation: (v) {
-                          if (ValidationTextForm.isValidPassword(v!) && v.isNotEmpty && v.length < 9) {
-                            _password = v;
-                            return null;
-                          } else {
-                            return 'Enter password not less than and more than 8 character and valid';
-                          }
-                        },
-                        onSave: (v) => _password = v!,
-                      ),
-                      ValidationRow(
-                        maxLine: 1,
-                        textLength: 8,
-                        obscureText: status.value,
-                        filled: true,
-                        passwordIconOnTap: () {
-                          status.value = !status.value;
-                        },
-                        showPasswordIcon: status.value ? Icons.visibility_off_sharp : Icons.visibility,
-                        isShowWidget: false,
-                        isShowPasswordIcon: true,
-                        labelText: 'Re type password*',
-                        textEditingController: rePasswordController,
-                        validation: (v) {
-                          if (v == _password) {
-                            return null;
-                          } else {
-                            return 'Password not matched';
-                          }
-                        },
-                      ),
-                    ],
-                  ),
+                Column(
+                  children: [
+                    ValidationRow(
+                      maxLine: 1,
+                      textLength: 8,
+                      obscureText: _status,
+                      filled: true,
+                      passwordIconOnTap: () {
+                        setState(() {});
+                      },
+                      isShowWidget: false,
+                      showPasswordIcon: _status ? Icons.visibility_off_sharp : Icons.visibility,
+                      isShowPasswordIcon: true,
+                      labelText: 'Password*',
+                      textEditingController: passwordController,
+                      validation: (v) {
+                        if (ValidationTextForm.isValidPassword(v!) && v.isNotEmpty && v.length < 9) {
+                          _password = v;
+                          return null;
+                        } else {
+                          return 'Enter password not less than and more than 8 character and valid';
+                        }
+                      },
+                      onSave: (v) => _password = v!,
+                    ),
+                    ValidationRow(
+                      maxLine: 1,
+                      textLength: 8,
+                      obscureText: _status,
+                      filled: true,
+                      passwordIconOnTap: () {
+                        setState(() {});
+                      },
+                      showPasswordIcon: _status ? Icons.visibility_off_sharp : Icons.visibility,
+                      isShowWidget: false,
+                      isShowPasswordIcon: true,
+                      labelText: 'Re type password*',
+                      textEditingController: rePasswordController,
+                      validation: (v) {
+                        if (v == _password) {
+                          return null;
+                        } else {
+                          return 'Password not matched';
+                        }
+                      },
+                    ),
+                  ],
                 ),
                 ElevatedButton(
                   onPressed: () {
