@@ -209,10 +209,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ElevatedButton(
                   onPressed: () {
                     if (formKey.currentState!.validate()) {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => const HomePage(),
-                        ),
+                      Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(builder: (context) => HomePage()),
+                        (route) => false,
                       );
                     }
                   },
