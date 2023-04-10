@@ -19,6 +19,7 @@ class ValidationRow extends StatelessWidget {
   Function(String?)? onSave;
   String? hintText;
   String? labelText;
+  String? helperText;
 
   ValidationRow({
     super.key,
@@ -40,6 +41,7 @@ class ValidationRow extends StatelessWidget {
     this.onSave,
     this.hintText,
     this.labelText,
+    this.helperText,
   });
 
   @override
@@ -69,6 +71,7 @@ class ValidationRow extends StatelessWidget {
                 fillColor: Colors.grey.withOpacity(0.1),
                 hintText: hintText,
                 labelText: labelText,
+                helperText: helperText,
                 labelStyle: const TextStyle(
                   color: Colors.black,
                 ),

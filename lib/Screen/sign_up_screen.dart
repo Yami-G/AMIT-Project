@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../Service/validation_class.dart';
 import '../widgets/validation_row.dart';
 import 'home_screen.dart';
+import 'navigation_bar_screen.dart';
 
 class SignUpScreen extends StatefulWidget {
   SignUpScreen({Key? key}) : super(key: key);
@@ -135,16 +136,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   hintText: 'Life Story',
                   border: const OutlineInputBorder(),
                   color: Colors.white,
-                ),
-                Padding(
-                  padding: EdgeInsets.only(left: 10.w, top: 5.h, bottom: 10.h),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      'Keep it short,This is a demo.',
-                      style: TextStyle(color: Colors.black.withOpacity(0.4)),
-                    ),
-                  ),
+                  helperText: 'Keep it sh`ort,This is a demo.',
                 ),
                 ValidationRow(
                   maxLine: 1,
@@ -178,7 +170,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           _password = v;
                           return null;
                         } else {
-                          return 'Enter password not less than and more than 8 character and valid';
+                          return 'Enter password not less than 8 character and valid';
                         }
                       },
                       onSave: (v) => _password = v!,
@@ -210,7 +202,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   onPressed: () {
                     if (formKey.currentState!.validate()) {
                       Navigator.of(context).pushAndRemoveUntil(
-                        MaterialPageRoute(builder: (context) => HomePage()),
+                        MaterialPageRoute(builder: (context) => NavigatorScreen()),
                         (route) => false,
                       );
                     }
