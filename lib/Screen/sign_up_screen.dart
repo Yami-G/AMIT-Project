@@ -138,6 +138,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   color: Colors.white,
                   helperText: 'Keep it sh`ort,This is a demo.',
                 ),
+                SizedBox(
+                  height: 5.h,
+                ),
                 ValidationRow(
                   maxLine: 1,
                   obscureText: false,
