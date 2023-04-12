@@ -1,31 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../Service/local_storage.dart';
 import '../Service/validation_class.dart';
 import '../widgets/validation_row.dart';
-import 'home_screen.dart';
 import 'navigation_bar_screen.dart';
 
 class SignUpScreen extends StatefulWidget {
-  SignUpScreen({Key? key}) : super(key: key);
+  const SignUpScreen({Key? key}) : super(key: key);
 
   @override
   State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  TextEditingController emailController = TextEditingController();
-  TextEditingController phoneController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-  TextEditingController rePasswordController = TextEditingController();
-  GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  String? _phoneNumber;
-  String? _email;
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController rePasswordController = TextEditingController();
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   String? _password;
   bool _status = true;
 
   statusValue() {
     _status = !_status;
+  }
+
+  @override
+  void initState() {
+    LocalStorage();
+    super.initState();
   }
 
   @override
@@ -49,8 +53,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.indigo,
-        title: const Text('Text fields'),
+        backgroundColor: Colors.amber,
+        title: const Text('Sign Up'),
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 15.w),
@@ -61,17 +65,22 @@ class _SignUpScreenState extends State<SignUpScreen> {
               children: [
                 ValidationRow(
                   maxLine: 1,
-                  textLength: 14,
-                  textType: TextInputType.phone,
-                  obscureText: false,
-                  filled: true,
-                  isShowWidget: true,
-                  icon: Icons.phone,
-                  color: Colors.black.withOpacity(0.5),
                   width: 10.w,
-                  labelText: 'Phone number*',
+                  filled: true,
+                  textLength: 14,
+                  icon: Icons.phone,
+                  obscureText: false,
+                  isShowLeadingIcon: true,
                   hintText: '012345678910',
+                  isShowPasswordIcon: false,
+                  labelText: 'Phone number*',
+                  isShowLeadingWidget: false,
+                  textType: TextInputType.phone,
+                  color: Colors.black.withOpacity(0.5),
                   textEditingController: phoneController,
+                  onSave: (v) {
+                    LocalStorage.setLocalData(key: 'phone', value: v, dataType: DataType.string);
+                  },
                   validation: (v) {
                     if ((ValidationTextForm.validatePhoneNumber(v!) == true && v.isNotEmpty) &&
                         (v.startsWith(
@@ -95,21 +104,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       return 'Enter a valid Number of 14';
                     }
                   },
-                  onSave: (v) => _phoneNumber = v!,
-                  isShowPasswordIcon: false,
                 ),
                 ValidationRow(
                   maxLine: 1,
-                  obscureText: false,
-                  filled: true,
-                  isShowWidget: true,
-                  isShowPasswordIcon: false,
-                  icon: Icons.email,
-                  color: Colors.black.withOpacity(0.5),
                   width: 10.w,
+                  filled: true,
+                  icon: Icons.email,
                   labelText: 'Email',
+                  obscureText: false,
+                  isShowLeadingIcon: true,
+                  isShowPasswordIcon: false,
+                  isShowLeadingWidget: false,
                   hintText: 'ab123@gmail.com',
+                  color: Colors.black.withOpacity(0.5),
                   textEditingController: emailController,
+                  onSave: (v) {
+                    LocalStorage.setLocalData(key: 'email', value: v, dataType: DataType.string);
+                  },
                   validation: (v) {
                     if ((v!.contains('@gmail.com') ||
                             v.contains('@hotmail.com') ||
@@ -122,20 +133,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       return 'Enter a valid email';
                     }
                   },
-                  onSave: (v) => _email = v!,
                 ),
                 SizedBox(
                   height: 20.h,
                 ),
                 ValidationRow(
+                  maxLine: 3,
                   filled: false,
                   obscureText: false,
-                  maxLine: 3,
-                  isShowPasswordIcon: false,
-                  isShowWidget: false,
-                  hintText: 'Life Story',
-                  border: const OutlineInputBorder(),
                   color: Colors.white,
+                  hintText: 'Life Story',
+                  isShowLeadingIcon: false,
+                  isShowPasswordIcon: false,
+                  isShowLeadingWidget: false,
+                  border: const OutlineInputBorder(),
                   helperText: 'Keep it sh`ort,This is a demo.',
                 ),
                 SizedBox(
@@ -143,12 +154,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
                 ValidationRow(
                   maxLine: 1,
-                  obscureText: false,
-                  isShowPasswordIcon: false,
-                  hintText: 'Salary',
-                  isShowWidget: false,
-                  border: const OutlineInputBorder(),
                   filled: false,
+                  hintText: 'Salary',
+                  obscureText: false,
+                  isShowLeadingIcon: false,
+                  isShowPasswordIcon: false,
+                  isShowLeadingWidget: false,
+                  border: const OutlineInputBorder(),
                 ),
                 SizedBox(
                   height: 15.h,
@@ -157,17 +169,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   children: [
                     ValidationRow(
                       maxLine: 1,
+                      filled: true,
                       textLength: 8,
                       obscureText: _status,
-                      filled: true,
-                      passwordIconOnTap: () {
-                        setState(() {});
-                      },
-                      isShowWidget: false,
-                      showPasswordIcon: _status ? Icons.visibility_off_sharp : Icons.visibility,
-                      isShowPasswordIcon: true,
                       labelText: 'Password*',
+                      isShowLeadingIcon: false,
+                      isShowPasswordIcon: true,
+                      isShowLeadingWidget: false,
                       textEditingController: passwordController,
+                      showPasswordIcon: _status ? Icons.visibility_off_sharp : Icons.visibility,
+                      onSave: (v) {
+                        LocalStorage.setLocalData(key: 'password', value: v, dataType: DataType.string);
+                      },
                       validation: (v) {
                         if (ValidationTextForm.isValidPassword(v!) && v.isNotEmpty && v.length < 9) {
                           _password = v;
@@ -176,21 +189,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           return 'Enter password not less than 8 character and valid';
                         }
                       },
-                      onSave: (v) => _password = v!,
-                    ),
-                    ValidationRow(
-                      maxLine: 1,
-                      textLength: 8,
-                      obscureText: _status,
-                      filled: true,
                       passwordIconOnTap: () {
                         setState(() {});
                       },
-                      showPasswordIcon: _status ? Icons.visibility_off_sharp : Icons.visibility,
-                      isShowWidget: false,
+                    ),
+                    ValidationRow(
+                      maxLine: 1,
+                      filled: true,
+                      textLength: 8,
+                      obscureText: _status,
+                      isShowLeadingIcon: false,
                       isShowPasswordIcon: true,
+                      isShowLeadingWidget: false,
                       labelText: 'Re type password*',
                       textEditingController: rePasswordController,
+                      showPasswordIcon: _status ? Icons.visibility_off_sharp : Icons.visibility,
                       validation: (v) {
                         if (v == _password) {
                           return null;
@@ -198,19 +211,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           return 'Password not matched';
                         }
                       },
+                      passwordIconOnTap: () {
+                        setState(() {});
+                      },
                     ),
                   ],
                 ),
                 ElevatedButton(
                   onPressed: () {
                     if (formKey.currentState!.validate()) {
+                      dispose();
                       Navigator.of(context).pushAndRemoveUntil(
                         MaterialPageRoute(builder: (context) => NavigatorScreen()),
                         (route) => false,
                       );
                     }
                   },
-                  style: ElevatedButton.styleFrom(backgroundColor: Colors.indigo),
+                  style: ElevatedButton.styleFrom(backgroundColor: Colors.amber.shade700),
                   child: const Text('SUBMIT'),
                 ),
               ],

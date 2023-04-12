@@ -1,80 +1,85 @@
 import 'package:flutter/material.dart';
 
 class ValidationRow extends StatelessWidget {
-  bool isShowWidget = false;
-  bool obscureText = false;
-  bool isShowPasswordIcon = false;
   bool filled;
   int maxLine;
-  TextInputType? textType;
-  int? textLength;
-  IconData? icon;
-  InputBorder? border;
-  IconData? showPasswordIcon;
   Color? color;
   double? width;
-  Function()? passwordIconOnTap;
-  TextEditingController? textEditingController;
-  String? Function(String?)? validation;
-  Function(String?)? onSave;
+  IconData? icon;
+  int? textLength;
   String? hintText;
   String? labelText;
   String? helperText;
+  InputBorder? border;
+  TextInputType? textType;
+  bool obscureText = false;
+  bool isShowLeadingWidget;
+  Function(String?)? onSave;
+  IconData? showPasswordIcon;
+  Function()? passwordIconOnTap;
+  bool isShowLeadingIcon = false;
+  bool isShowPasswordIcon = false;
+  Widget? widget = const SizedBox();
+  String? Function(String?)? validation;
+  TextEditingController? textEditingController;
 
   ValidationRow({
     super.key,
-    this.showPasswordIcon,
-    this.textLength,
-    this.textType,
-    required this.obscureText,
-    required this.filled,
-    required this.maxLine,
-    this.passwordIconOnTap,
-    this.border,
-    required this.isShowPasswordIcon,
-    required this.isShowWidget,
     this.icon,
     this.color,
     this.width,
-    this.validation,
-    this.textEditingController,
+    this.widget,
     this.onSave,
+    this.border,
+    this.textType,
     this.hintText,
     this.labelText,
+    this.textLength,
     this.helperText,
+    this.validation,
+    this.showPasswordIcon,
+    this.passwordIconOnTap,
+    this.textEditingController,
+    required this.isShowLeadingWidget,
+    required this.isShowPasswordIcon,
+    required this.isShowLeadingIcon,
+    required this.obscureText,
+    required this.filled,
+    required this.maxLine,
   });
 
   @override
   Widget build(BuildContext context) {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        isShowWidget ? Icon(icon, color: color) : const SizedBox(),
+        isShowLeadingWidget ? widget! : const SizedBox(),
         SizedBox(
           width: width,
         ),
         Expanded(
           child: IntrinsicHeight(
             child: TextFormField(
+              onSaved: onSave,
               maxLines: maxLine,
-              keyboardType: textType,
+              validator: validation,
               maxLength: textLength,
+              keyboardType: textType,
               obscureText: obscureText,
               controller: textEditingController,
-              validator: validation,
-              onSaved: onSave,
               decoration: InputDecoration(
-                suffixIcon: isShowPasswordIcon
-                    ? InkWell(onTap: passwordIconOnTap, child: Icon(showPasswordIcon))
-                    : const SizedBox(),
                 border: border,
                 filled: filled,
-                fillColor: Colors.grey.withOpacity(0.1),
+                iconColor: color,
                 hintText: hintText,
                 labelText: labelText,
                 helperText: helperText,
-                labelStyle: const TextStyle(
-                  color: Colors.black,
-                ),
+                fillColor: Colors.grey.withOpacity(0.1),
+                labelStyle: const TextStyle(color: Colors.black),
+                icon: isShowLeadingIcon ? Icon(icon) : null,
+                suffixIcon: isShowPasswordIcon
+                    ? InkWell(onTap: passwordIconOnTap, child: Icon(showPasswordIcon))
+                    : const SizedBox(),
               ),
             ),
           ),

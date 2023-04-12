@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DrawerScreen extends StatelessWidget {
   const DrawerScreen({Key? key}) : super(key: key);
@@ -6,51 +7,62 @@ class DrawerScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      backgroundColor: Colors.amber,
-      child: Column(
-        children: [
-          Stack(children: []),
-          ListTile(
-            title: Text('mohamed abouassi'),
-            subtitle: Text('Tanta'),
-          ),
-          ListTile(
-            leading: const Icon(
-              Icons.home,
-              color: Colors.black,
+      backgroundColor: Colors.white,
+      child: Padding(
+        padding: EdgeInsets.only(top: 25.h),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Stack(
+              fit: StackFit.loose,
+              alignment: Alignment.bottomRight,
+              children: [
+                CircleAvatar(
+                  backgroundColor: Colors.red,
+                  radius: 80.r,
+                ),
+                CircleAvatar(
+                  backgroundColor: Colors.green,
+                  radius: 20.r,
+                ),
+              ],
             ),
-            title: const Text(
-              "Home",
-              style: TextStyle(
-                color: Color(0xff800000),
-                fontSize: 21,
-                fontWeight: FontWeight.w700,
+            ListTile(
+              title: Text(
+                'mohamed abouassi',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.w500),
+              ),
+              subtitle: Text(
+                'Tanta',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.w500),
               ),
             ),
-            onTap: () {
-// Handle your onTap event here
-              Navigator.pop(context);
-            },
-          ),
-          ListTile(
-            leading: const Icon(
-              Icons.settings,
-              color: Colors.black,
-            ),
-            title: const Text(
-              "Settings",
-              style: TextStyle(
-                color: Color(0xff800000),
-                fontSize: 21,
-                fontWeight: FontWeight.w700,
+            ListTile(
+              title: Text(
+                'Order Screen',
+                style: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.w500),
               ),
+              iconColor: Colors.black,
+              leading: const Icon(Icons.menu),
+              onTap: () {
+                Navigator.pop(context);
+              },
             ),
-            onTap: () {
-// Handle your onTap event here
-              Navigator.pop(context);
-            },
-          ),
-        ],
+            ListTile(
+              title: Text(
+                'Profile Screen',
+                style: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.w500),
+              ),
+              leading: const Icon(Icons.person),
+              iconColor: Colors.black,
+              onTap: () {
+                Navigator.pop(context);
+              },
+            )
+          ],
+        ),
       ),
     );
   }
