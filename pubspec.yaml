@@ -30,6 +30,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
   # add flutter_screenutil
 
 
@@ -42,10 +44,14 @@ dependencies:
   cupertino_icons: ^1.0.2
   #provider
   flutter_riverpod: ^2.3.4
+  get_it: ^7.2.0
   #drawer
   sidebarx: ^0.14.0
   #shared preferance
   shared_preferences: ^2.1.0
+  #country_code_picker:
+  country_code_picker: ^3.0.0
+  fl_country_code_picker: ^0.0.4
 
 
 dev_dependencies:
@@ -64,14 +70,9 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
-
-  # The following line ensures that the Material Icons font is
-  # included with your application, so that you can use the icons in
-  # the material Icons class.
   uses-material-design: true
-
-  # To add assets to your application, add an assets section, like this:
-  # assets:
+  assets:
+   - assets/images/
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

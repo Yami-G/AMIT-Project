@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../shared/resources/images.dart';
+
 class DrawerScreen extends StatelessWidget {
   const DrawerScreen({Key? key}) : super(key: key);
 
@@ -20,10 +22,12 @@ class DrawerScreen extends StatelessWidget {
                 CircleAvatar(
                   backgroundColor: Colors.red,
                   radius: 80.r,
+                  backgroundImage: const AssetImage(Images.tiger),
                 ),
                 CircleAvatar(
                   backgroundColor: Colors.green,
                   radius: 20.r,
+                  backgroundImage: const AssetImage(Images.thumb),
                 ),
               ],
             ),
@@ -41,26 +45,15 @@ class DrawerScreen extends StatelessWidget {
             ),
             ListTile(
               title: Text(
-                'Order Screen',
+                'Logout',
                 style: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.w500),
               ),
               iconColor: Colors.black,
-              leading: const Icon(Icons.menu),
+              leading: const Icon(Icons.logout),
               onTap: () {
                 Navigator.pop(context);
               },
             ),
-            ListTile(
-              title: Text(
-                'Profile Screen',
-                style: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.w500),
-              ),
-              leading: const Icon(Icons.person),
-              iconColor: Colors.black,
-              onTap: () {
-                Navigator.pop(context);
-              },
-            )
           ],
         ),
       ),

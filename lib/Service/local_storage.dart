@@ -1,50 +1,181 @@
+// import 'package:shared_preferences/shared_preferences.dart';
+// import 'dart:async';
+//
+// enum DataType {
+//   string,
+//   int,
+//   double,
+//   bool,
+//   stringList,
+// }
+//
+// class LocalStorage {
+//   static final Future<SharedPreferences> _sharedPreferences = SharedPreferences.getInstance();
+//
+//   static Future<SharedPreferences?> getInstance() async {
+//     return _sharedPreferences;
+//   }
+//
+//   Future<bool> saveData({
+//     required String key,
+//     required dynamic value,
+//     required DataType dataType,
+//   }) async {
+//     return await _tryCatchWrapper(
+//       () async {
+//         return await setLocalData(key: key, dataType: dataType, value: value);
+//       },
+//     );
+//   }
+//
+//   static getLocalData({required String key, required DataType dataType}) async {
+//     switch (dataType) {
+//       case DataType.int:
+//         return _sharedPreferences.getInt(key);
+//       case DataType.double:
+//         return _sharedPreferences.getDouble(key);
+//       case DataType.bool:
+//         return _sharedPreferences.getBool(key);
+//       case DataType.string:
+//         return _sharedPreferences.getString(key);
+//       case DataType.stringList:
+//         return _sharedPreferences.getStringList(key);
+//     }
+//   }
+//
+//   Future<bool> clearAll() async {
+//     return await _tryCatchWrapper(
+//           () async {
+//         return await sharedPreferences.clear();
+//       },
+//     );
+//   }
+//   static Future<void> clear() async {
+//     _sharedPreferences.clear();
+//   }
+//
+//   static Future setLocalData({required String key, required dynamic value, required DataType dataType}) async {
+//     switch (dataType) {
+//       case DataType.int:
+//         return _sharedPreferences.setInt(key, value);
+//       case DataType.double:
+//         return _sharedPreferences.setDouble(key, value);
+//       case DataType.bool:
+//         return _sharedPreferences.setBool(key, value);
+//       case DataType.string:
+//         return _sharedPreferences.setString(key, value);
+//       case DataType.stringList:
+//         return _sharedPreferences.setStringList(key, value);
+//     }
+//   }
+//
+//   Future<T> _tryCatchWrapper<T>(Function body) async {
+//     try {
+//       return await body();
+//     } on Exception catch (e) {
+//       throw e.toString();
+//     }
+//   }
+// }
 import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:async';
 
-enum DataType {
-  string,
-  int,
-  double,
-  bool,
-  stringList,
-}
+import 'abstract.dart';
 
-class LocalStorage {
-  static final SharedPreferences? _sharedPreferences = SharedPreferences.getInstance() as SharedPreferences?;
-
-  static Future<SharedPreferences?> getInstance() async {
-    return _sharedPreferences;
+class SharedPrefsLocalStorage implements AbstractLocalStorage {
+  late SharedPreferences? sharedPreferences;
+  SharedPrefsLocalStorage({this.sharedPreferences});
+  Future<SharedPreferences> createOne() async {
+    SharedPreferences sharedPreferences = SharedPreferences.getInstance() as SharedPreferences;
+    return sharedPreferences;
   }
 
-  static getLocalData({required String key, required DataType dataType}) {
-    if (dataType == DataType.int) {
-      _sharedPreferences?.getInt(key);
-    } else if (dataType == DataType.double) {
-      _sharedPreferences?.getDouble(key);
-    } else if (dataType == DataType.bool) {
-      _sharedPreferences?.getBool(key);
-    } else if (dataType == DataType.string) {
-      _sharedPreferences?.getString(key);
-    } else if (dataType == DataType.stringList) {
-      _sharedPreferences?.getStringList(key);
+  @override
+  Future<bool> saveData({
+    required String key,
+    required dynamic value,
+    required DataType dataType,
+  }) async {
+    return await _tryCatchWrapper(
+      () async {
+        return await setMethod(dataType: dataType, key: key, value: value);
+      },
+    );
+  }
+
+  @override
+  Future<dynamic> restoreData({
+    required String key,
+    required DataType dataType,
+  }) async {
+    return await _tryCatchWrapper(
+      () async {
+        return await getMethod(dataType: dataType, key: key);
+      },
+    );
+  }
+
+  @override
+  Future<bool> clearData() async {
+    return await _tryCatchWrapper(
+      () async {
+        return await sharedPreferences!.clear();
+      },
+    );
+  }
+
+  @override
+  Future<bool> clearKey({required key}) async {
+    return await _tryCatchWrapper(
+      () async {
+        return await sharedPreferences!.remove(key);
+      },
+    );
+  }
+
+  @override
+  setMethod({
+    required DataType dataType,
+    required String key,
+    required dynamic value,
+  }) {
+    switch (dataType) {
+      case DataType.string:
+        return sharedPreferences!.setString(key, value);
+      case DataType.int:
+        return sharedPreferences!.setInt(key, value);
+      case DataType.double:
+        return sharedPreferences!.setDouble(key, value);
+      case DataType.bool:
+        return sharedPreferences!.setBool(key, value);
+      case DataType.stringList:
+        return sharedPreferences!.setStringList(key, value);
     }
   }
 
-  static Future<void> clear() async {
-    _sharedPreferences?.clear();
+  @override
+  getMethod({
+    required DataType dataType,
+    required String key,
+  }) {
+    switch (dataType) {
+      case DataType.string:
+        return sharedPreferences!.getString(key);
+      case DataType.int:
+        return sharedPreferences!.getInt(key);
+      case DataType.double:
+        return sharedPreferences!.getDouble(key);
+      case DataType.bool:
+        return sharedPreferences!.getBool(key);
+      case DataType.stringList:
+        return sharedPreferences!.getStringList(key);
+    }
   }
 
-  static Future setLocalData({required String key, required dynamic value, required DataType dataType}) async {
-    if (dataType == DataType.int) {
-      _sharedPreferences?.setInt(key, value);
-    } else if (dataType == DataType.double) {
-      _sharedPreferences?.setDouble(key, value);
-    } else if (dataType == DataType.bool) {
-      _sharedPreferences?.setBool(key, value);
-    } else if (dataType == DataType.string) {
-      _sharedPreferences?.setString(key, value);
-    } else if (dataType == DataType.stringList) {
-      _sharedPreferences?.setStringList(key, value);
+  Future<T> _tryCatchWrapper<T>(Function body) async {
+    try {
+      return await body();
+    } on Exception catch (e) {
+      throw e.toString();
     }
   }
 }

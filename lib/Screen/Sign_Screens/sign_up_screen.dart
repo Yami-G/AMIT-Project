@@ -1,10 +1,9 @@
+import 'package:amit_course1/widgets/elevation_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import '../Service/local_storage.dart';
-import '../Service/validation_class.dart';
-import '../widgets/validation_row.dart';
-import 'navigation_bar_screen.dart';
+import '../../Service/validation_class.dart';
+import '../../widgets/validation_row.dart';
+import '../Navigat_Screens/navigation_bar_screen.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -28,7 +27,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   void initState() {
-    LocalStorage();
+    // LocalStorage();
     super.initState();
   }
 
@@ -78,9 +77,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   textType: TextInputType.phone,
                   color: Colors.black.withOpacity(0.5),
                   textEditingController: phoneController,
-                  onSave: (v) {
-                    LocalStorage.setLocalData(key: 'phone', value: v, dataType: DataType.string);
-                  },
+                  onSave: (v) {},
                   validation: (v) {
                     if ((ValidationTextForm.validatePhoneNumber(v!) == true && v.isNotEmpty) &&
                         (v.startsWith(
@@ -118,9 +115,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   hintText: 'ab123@gmail.com',
                   color: Colors.black.withOpacity(0.5),
                   textEditingController: emailController,
-                  onSave: (v) {
-                    LocalStorage.setLocalData(key: 'email', value: v, dataType: DataType.string);
-                  },
+                  onSave: (v) {},
                   validation: (v) {
                     if ((v!.contains('@gmail.com') ||
                             v.contains('@hotmail.com') ||
@@ -178,9 +173,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       isShowLeadingWidget: false,
                       textEditingController: passwordController,
                       showPasswordIcon: _status ? Icons.visibility_off_sharp : Icons.visibility,
-                      onSave: (v) {
-                        LocalStorage.setLocalData(key: 'password', value: v, dataType: DataType.string);
-                      },
+                      onSave: (v) {},
                       validation: (v) {
                         if (ValidationTextForm.isValidPassword(v!) && v.isNotEmpty && v.length < 9) {
                           _password = v;
@@ -217,18 +210,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                   ],
                 ),
-                ElevatedButton(
+                CustomElevatedButton(
+                  formKey: formKey,
+                  text: 'SUBMIT',
                   onPressed: () {
                     if (formKey.currentState!.validate()) {
-                      dispose();
                       Navigator.of(context).pushAndRemoveUntil(
                         MaterialPageRoute(builder: (context) => NavigatorScreen()),
                         (route) => false,
                       );
                     }
                   },
-                  style: ElevatedButton.styleFrom(backgroundColor: Colors.amber.shade700),
-                  child: const Text('SUBMIT'),
                 ),
               ],
             ),

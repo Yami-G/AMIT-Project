@@ -1,14 +1,19 @@
-import 'package:amit_course1/Screen/home_screen.dart';
-import 'package:amit_course1/Screen/sign_in_screen.dart';
-import 'package:amit_course1/Screen/sign_up_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:amit_course1/Screen/Sign_Screens/sign_in_screen.dart';
+import 'package:amit_course1/shared/resources/locales.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import 'Screen/drawer_screen.dart';
-import 'Screen/navigation_bar_screen.dart';
+import 'package:country_code_picker/country_code_picker.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'Screen/Navigat_Screens/drawer_screen.dart';
+import 'Screen/Navigat_Screens/navigation_bar_screen.dart';
+import 'Service/getit_services.dart';
 
 void main() {
-  runApp(const MyApp());
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+  GetItServices.configureServices();
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -18,7 +23,14 @@ class MyApp extends StatelessWidget {
     return ScreenUtilInit(
       designSize: const Size(360, 690),
       builder: (context, child) {
-        return const MaterialApp(
+        return MaterialApp(
+          supportedLocales: Locales.locales,
+          localizationsDelegates: const [
+            CountryLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
           debugShowCheckedModeBanner: false,
           home: SignInScreen(),
         );
