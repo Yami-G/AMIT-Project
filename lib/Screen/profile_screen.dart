@@ -21,33 +21,30 @@ class ProfileScreen extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Padding(
-                  padding: EdgeInsets.only(),
-                  child: Column(
-                    children: [
-                      Stack(
-                        alignment: Alignment.bottomRight,
-                        children: const [
-                          CircleAvatar(
-                            backgroundColor: Colors.red,
-                            radius: 80,
-                            backgroundImage: AssetImage(Images.tiger),
-                          ),
-                          CircleAvatar(
-                            backgroundColor: Colors.green,
-                            radius: 20,
-                            foregroundImage: AssetImage(Images.thumb),
-                          ),
-                        ],
-                      ),
-                      const IntrinsicWidth(
-                        child: ListTile(
-                          title: Text('mohamed abouassi', textAlign: TextAlign.center),
-                          subtitle: Text('Tanta', textAlign: TextAlign.center),
+                Column(
+                  children: [
+                    Stack(
+                      alignment: Alignment.bottomRight,
+                      children: const [
+                        CircleAvatar(
+                          backgroundColor: Colors.red,
+                          radius: 80,
+                          backgroundImage: AssetImage(Images.tiger),
                         ),
+                        CircleAvatar(
+                          backgroundColor: Colors.green,
+                          radius: 20,
+                          foregroundImage: AssetImage(Images.thumb),
+                        ),
+                      ],
+                    ),
+                    const IntrinsicWidth(
+                      child: ListTile(
+                        title: Text('mohamed abouassi', textAlign: TextAlign.center),
+                        subtitle: Text('Tanta', textAlign: TextAlign.center),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ],
             ),

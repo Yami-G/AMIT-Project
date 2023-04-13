@@ -2,8 +2,6 @@ import 'package:amit_course1/Screen/forgot_screen.dart';
 import 'package:amit_course1/widgets/validation_row.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import '../Service/user_data.dart';
 import '../Service/validation_class.dart';
 import 'Navigat_Screens/navigation_bar_screen.dart';
 import 'Sign_Screens/sign_up_screen.dart';
@@ -47,7 +45,7 @@ class _SignInScreenState extends State<SignInScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.symmetric(
+        padding: const EdgeInsets.symmetric(
           horizontal: 25,
         ),
         child: Form(
@@ -76,7 +74,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     isShowLeadingIcon: false,
                     isShowPasswordIcon: false,
                     isShowLeadingWidget: false,
-                    border: OutlineInputBorder(),
+                    border: const OutlineInputBorder(),
                     textEditingController: emailController,
                     validation: (v) {
                       if ((v!.contains('@gmail.com') ||
@@ -101,7 +99,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     obscureText: _status,
                     isShowLeadingIcon: false,
                     isShowPasswordIcon: true,
-                    border: OutlineInputBorder(),
+                    border: const OutlineInputBorder(),
                     isShowLeadingWidget: false,
                     textEditingController: passwordController,
                     showPasswordIcon: _status ? Icons.visibility_off_sharp : Icons.visibility,
