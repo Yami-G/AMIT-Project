@@ -2,7 +2,7 @@ import 'package:amit_course1/widgets/validation_row.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'navigation_bar_screen.dart';
+import 'Navigat_Screens/navigation_bar_screen.dart';
 
 class ForgotScreen extends StatelessWidget {
   ForgotScreen({Key? key}) : super(key: key);

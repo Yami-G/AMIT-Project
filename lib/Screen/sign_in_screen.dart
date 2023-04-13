@@ -1,13 +1,12 @@
 import 'package:amit_course1/Screen/forgot_screen.dart';
-import 'package:amit_course1/Screen/sign_up_screen.dart';
-import 'package:amit_course1/Service/local_storage.dart';
 import 'package:amit_course1/widgets/validation_row.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../Service/user_data.dart';
 import '../Service/validation_class.dart';
-import 'navigation_bar_screen.dart';
+import 'Navigat_Screens/navigation_bar_screen.dart';
+import 'Sign_Screens/sign_up_screen.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({Key? key}) : super(key: key);
@@ -28,7 +27,6 @@ class _SignInScreenState extends State<SignInScreen> {
 
   @override
   void initState() {
-    LocalStorage();
     super.initState();
   }
 
@@ -124,10 +122,6 @@ class _SignInScreenState extends State<SignInScreen> {
                   ElevatedButton(
                     onPressed: () {
                       if (formKey.currentState!.validate()) {
-                        LocalStorage.setLocalData(
-                            key: 'userData',
-                            value: LoginData(email: emailController.text, password: passwordController.text).toJason(),
-                            dataType: DataType.stringList);
                         Navigator.of(context).pushAndRemoveUntil(
                           MaterialPageRoute(builder: (context) => NavigatorScreen()),
                           (route) => false,
