@@ -84,6 +84,7 @@ import 'abstract.dart';
 class SharedPrefsLocalStorage implements AbstractLocalStorage {
   late SharedPreferences? sharedPreferences;
   SharedPrefsLocalStorage({this.sharedPreferences});
+
   Future<SharedPreferences> createOne() async {
     SharedPreferences sharedPreferences = SharedPreferences.getInstance() as SharedPreferences;
     return sharedPreferences;

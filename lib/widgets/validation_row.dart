@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ValidationRow extends StatelessWidget {
+  bool? enabled;
   bool filled;
   int maxLine;
   Color? color;
@@ -31,6 +32,7 @@ class ValidationRow extends StatelessWidget {
     this.widget,
     this.onSave,
     this.border,
+    this.enabled,
     this.textType,
     this.hintText,
     this.labelText,
@@ -61,6 +63,7 @@ class ValidationRow extends StatelessWidget {
           child: IntrinsicHeight(
             child: TextFormField(
               onSaved: onSave,
+              enabled: enabled,
               maxLines: maxLine,
               validator: validation,
               maxLength: textLength,

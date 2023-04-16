@@ -1,18 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:amit_course1/Screen/Sign_Screens/sign_in_screen.dart';
-import 'package:amit_course1/shared/resources/locales.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:amit_course1/shared/resources/locales.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'Screen/Navigat_Screens/drawer_screen.dart';
-import 'Screen/Navigat_Screens/navigation_bar_screen.dart';
-import 'Service/getit_services.dart';
+import 'package:amit_course1/Screen/Navigat_Screens/navigation_bar_screen.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
-  GetItServices.configureServices();
   runApp(const ProviderScope(child: MyApp()));
 }
 
@@ -32,7 +28,7 @@ class MyApp extends StatelessWidget {
             GlobalCupertinoLocalizations.delegate,
           ],
           debugShowCheckedModeBanner: false,
-          home: SignInScreen(),
+          home: NavigatorScreen(),
         );
       },
     );

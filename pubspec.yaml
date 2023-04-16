@@ -44,14 +44,12 @@ dependencies:
   cupertino_icons: ^1.0.2
   #provider
   flutter_riverpod: ^2.3.4
-  get_it: ^7.2.0
   #drawer
   sidebarx: ^0.14.0
   #shared preferance
   shared_preferences: ^2.1.0
   #country_code_picker:
   country_code_picker: ^3.0.0
-  fl_country_code_picker: ^0.0.4
 
 
 dev_dependencies:

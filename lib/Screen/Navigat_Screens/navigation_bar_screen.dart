@@ -1,3 +1,4 @@
+import 'package:amit_course1/Screen/menu_screen.dart';
 import 'package:amit_course1/Screen/order_screen.dart';
 import 'package:amit_course1/Screen/profile_screen.dart';
 import 'package:custom_navigation_bar/custom_navigation_bar.dart';
@@ -12,6 +13,7 @@ class NavigatorScreen extends StatelessWidget {
   final List<Widget> _navigationScreens = [
     ProfileScreen(),
     const OrderScreen(),
+    const MenuScreen(),
   ];
   @override
   Widget build(BuildContext context) {
@@ -36,6 +38,9 @@ class NavigatorScreen extends StatelessWidget {
             items: [
               CustomNavigationBarItem(
                 icon: const FaIcon(FontAwesomeIcons.person),
+              ),
+              CustomNavigationBarItem(
+                icon: const Icon(Icons.drive_eta),
               ),
               CustomNavigationBarItem(
                 icon: const Icon(Icons.restaurant_menu),

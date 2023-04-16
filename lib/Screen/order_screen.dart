@@ -15,7 +15,7 @@ class OrderScreen extends StatelessWidget {
         itemBuilder: (context, index) => IntrinsicWidth(
           child: Card(
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.r)),
-            margin: EdgeInsets.symmetric(vertical: 15.h, horizontal: 30.w),
+            margin: EdgeInsets.symmetric(vertical: 10.h, horizontal: 30.w),
             child: Container(
               height: 200.h,
               padding: EdgeInsets.only(top: 30.h, bottom: 30.h, left: 20.w, right: 10.w),

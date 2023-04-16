@@ -1,10 +1,9 @@
-import 'package:amit_course1/widgets/elevation_button.dart';
-import 'package:amit_course1/widgets/validation_row.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import '../shared/resources/images.dart';
 import '../widgets/profile_text.dart';
+import 'package:flutter/material.dart';
+import '../shared/resources/images.dart';
+import 'package:amit_course1/widgets/validation_row.dart';
+import 'package:amit_course1/widgets/elevation_button.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ProfileScreen extends StatelessWidget {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -25,16 +24,16 @@ class ProfileScreen extends StatelessWidget {
                   children: [
                     Stack(
                       alignment: Alignment.bottomRight,
-                      children: const [
+                      children: [
                         CircleAvatar(
+                          backgroundImage: const AssetImage(Images.tiger),
                           backgroundColor: Colors.red,
-                          radius: 80,
-                          backgroundImage: AssetImage(Images.tiger),
+                          radius: 80.r,
                         ),
                         CircleAvatar(
+                          foregroundImage: const AssetImage(Images.thumb),
                           backgroundColor: Colors.green,
-                          radius: 20,
-                          foregroundImage: AssetImage(Images.thumb),
+                          radius: 20.r,
                         ),
                       ],
                     ),
@@ -53,14 +52,13 @@ class ProfileScreen extends StatelessWidget {
               height: 10.h,
             ),
             ValidationRow(
+              labelText: 'mohamed abouassi',
               isShowLeadingWidget: false,
               isShowPasswordIcon: false,
-              border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
               isShowLeadingIcon: false,
               obscureText: false,
               filled: false,
               maxLine: 1,
-              labelText: 'mohamed abouassi',
             ),
             SizedBox(
               height: 10.h,
@@ -70,14 +68,14 @@ class ProfileScreen extends StatelessWidget {
               height: 10.h,
             ),
             ValidationRow(
-              isShowLeadingWidget: false,
               border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
+              labelText: '+210207333848',
+              isShowLeadingWidget: false,
               isShowPasswordIcon: false,
               isShowLeadingIcon: false,
               obscureText: false,
               filled: false,
               maxLine: 1,
-              labelText: '+210207333848',
             ),
             SizedBox(
               height: 10.h,
@@ -87,14 +85,14 @@ class ProfileScreen extends StatelessWidget {
               height: 10.h,
             ),
             ValidationRow(
-              isShowLeadingWidget: false,
               border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
+              isShowLeadingWidget: false,
               isShowPasswordIcon: false,
               isShowLeadingIcon: false,
               obscureText: false,
+              labelText: 'Tanta',
               filled: false,
               maxLine: 1,
-              labelText: 'Tanta',
             ),
             SizedBox(
               height: 5.h,

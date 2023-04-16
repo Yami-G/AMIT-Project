@@ -23,9 +23,15 @@ class _SignInScreenState extends State<SignInScreen> {
   final TextEditingController passwordController = TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   bool _status = true;
-  late SharedPrefsLocalStorage localStorageData;
+  late final SharedPrefsLocalStorage localStorageData;
   statusValue() {
     _status = !_status;
+  }
+
+  @override
+  void didChangeDependencies() async {
+    localStorageData = await SharedPrefsLocalStorage().createOne() as SharedPrefsLocalStorage;
+    super.didChangeDependencies();
   }
 
   @override

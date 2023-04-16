@@ -1,4 +1,4 @@
-import 'package:amit_course1/Screen/forgot_screen.dart';
+import 'package:amit_course1/Screen/Sign_Screens/forgot_screen.dart';
 import 'package:amit_course1/widgets/validation_row.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
