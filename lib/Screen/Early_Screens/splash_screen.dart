@@ -1,27 +1,27 @@
+import 'package:amit_course1/Provider/local_storage_provider.dart';
 import 'package:amit_course1/Service/abstract.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../Service/local_storage.dart';
 import '../../shared/resources/images.dart';
 import '../Navigat_Screens/navigation_bar_screen.dart';
 import '../Sign_Screens/sign_in_screen.dart';
 
-class SplashScreen extends StatefulWidget {
+class SplashScreen extends ConsumerStatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
 
   @override
-  State<SplashScreen> createState() => _SplashScreenState();
+  ConsumerState<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class _SplashScreenState extends ConsumerState<SplashScreen> {
+  @override
   @override
   void didChangeDependencies() async {
     Future.delayed(const Duration(seconds: 1), () async {
       {
-        final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-        SharedPrefsLocalStorage(sharedPreferences: sharedPreferences)
+        SharedPrefsLocalStorage(sharedPreferences: ref.read(localStorageProvider).sharedPreferences)
             .restoreData(key: 'user', dataType: DataType.string)
             .then((v) {
           debugPrint('user = $v');

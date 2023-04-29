@@ -1,6 +1,6 @@
 class LoginData {
-  final String phone, password;
-  LoginData({required this.phone, required this.password});
+  final String? phone, password;
+  LoginData({this.phone, this.password});
 
   factory LoginData.fromJson(json) => LoginData(password: json['password'], phone: json['phone']);
 

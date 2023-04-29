@@ -77,18 +77,16 @@
 //     }
 //   }
 // }
+import 'dart:convert';
+
+import 'package:amit_course1/Model/user_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'abstract.dart';
 
 class SharedPrefsLocalStorage implements AbstractLocalStorage {
-  late SharedPreferences? sharedPreferences;
-  SharedPrefsLocalStorage({this.sharedPreferences});
-
-  Future<SharedPreferences> createOne() async {
-    SharedPreferences sharedPreferences = SharedPreferences.getInstance() as SharedPreferences;
-    return sharedPreferences;
-  }
+  late SharedPreferences sharedPreferences;
+  SharedPrefsLocalStorage({required this.sharedPreferences});
 
   @override
   Future<bool> saveData({
@@ -119,7 +117,7 @@ class SharedPrefsLocalStorage implements AbstractLocalStorage {
   Future<bool> clearData() async {
     return await _tryCatchWrapper(
       () async {
-        return await sharedPreferences!.clear();
+        return await sharedPreferences.clear();
       },
     );
   }
@@ -128,7 +126,7 @@ class SharedPrefsLocalStorage implements AbstractLocalStorage {
   Future<bool> clearKey({required key}) async {
     return await _tryCatchWrapper(
       () async {
-        return await sharedPreferences!.remove(key);
+        return await sharedPreferences.remove(key);
       },
     );
   }
@@ -141,15 +139,15 @@ class SharedPrefsLocalStorage implements AbstractLocalStorage {
   }) {
     switch (dataType) {
       case DataType.string:
-        return sharedPreferences!.setString(key, value);
+        return sharedPreferences.setString(key, value);
       case DataType.int:
-        return sharedPreferences!.setInt(key, value);
+        return sharedPreferences.setInt(key, value);
       case DataType.double:
-        return sharedPreferences!.setDouble(key, value);
+        return sharedPreferences.setDouble(key, value);
       case DataType.bool:
-        return sharedPreferences!.setBool(key, value);
+        return sharedPreferences.setBool(key, value);
       case DataType.stringList:
-        return sharedPreferences!.setStringList(key, value);
+        return sharedPreferences.setStringList(key, value);
     }
   }
 
@@ -160,15 +158,15 @@ class SharedPrefsLocalStorage implements AbstractLocalStorage {
   }) {
     switch (dataType) {
       case DataType.string:
-        return sharedPreferences!.getString(key);
+        return sharedPreferences.getString(key);
       case DataType.int:
-        return sharedPreferences!.getInt(key);
+        return sharedPreferences.getInt(key);
       case DataType.double:
-        return sharedPreferences!.getDouble(key);
+        return sharedPreferences.getDouble(key);
       case DataType.bool:
-        return sharedPreferences!.getBool(key);
+        return sharedPreferences.getBool(key);
       case DataType.stringList:
-        return sharedPreferences!.getStringList(key);
+        return sharedPreferences.getStringList(key);
     }
   }
 
@@ -178,5 +176,22 @@ class SharedPrefsLocalStorage implements AbstractLocalStorage {
     } on Exception catch (e) {
       throw e.toString();
     }
+  }
+
+  @override
+  Future<LoginData?> restoreUserData({
+    required String key,
+  }) async {
+    return await _tryCatchWrapper(
+      () async {
+        final String? user = await getMethod(dataType: DataType.string, key: key);
+        if (user != null) {
+          final Map<String, dynamic>? json = jsonDecode(user);
+          return LoginData.fromJson(json!);
+        } else {
+          return null;
+        }
+      },
+    );
   }
 }

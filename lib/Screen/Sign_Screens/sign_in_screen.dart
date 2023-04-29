@@ -1,54 +1,25 @@
-import 'package:amit_course1/Screen/Sign_Screens/forgot_screen.dart';
 import 'package:amit_course1/Screen/Sign_Screens/sign_up_screen.dart';
-import 'package:amit_course1/Service/local_storage.dart';
-import 'package:amit_course1/widgets/elevation_button.dart';
-import 'package:amit_course1/widgets/validation_row.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../Service/validation_class.dart';
 import '../../shared/resources/images.dart';
+import '../../widgets/elevation_button.dart';
+import '../../widgets/validation_row.dart';
 import '../Navigat_Screens/navigation_bar_screen.dart';
+import 'forgot_screen.dart';
 
-class SignInScreen extends StatefulWidget {
-  const SignInScreen({
-    Key? key,
-  }) : super(key: key);
+final showPasswordIn = StateProvider((ref) => true);
 
+class SignInScreen extends HookConsumerWidget {
+  const SignInScreen({Key? key}) : super(key: key);
   @override
-  State<SignInScreen> createState() => _SignInScreenState();
-}
-
-class _SignInScreenState extends State<SignInScreen> {
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  bool _status = true;
-  late final SharedPrefsLocalStorage localStorageData;
-  statusValue() {
-    _status = !_status;
-  }
-
-  @override
-  void didChangeDependencies() async {
-    localStorageData = await SharedPrefsLocalStorage().createOne() as SharedPrefsLocalStorage;
-    super.didChangeDependencies();
-  }
-
-  @override
-  void setState(VoidCallback fn) {
-    statusValue();
-    super.setState(fn);
-  }
-
-  @override
-  void dispose() {
-    emailController.dispose();
-    passwordController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final TextEditingController emailController = useTextEditingController();
+    final TextEditingController passwordController = useTextEditingController();
+    final formKey = useMemoized(() => GlobalKey<FormState>());
+    bool status = ref.watch(showPasswordIn);
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.symmetric(
@@ -103,13 +74,13 @@ class _SignInScreenState extends State<SignInScreen> {
                     maxLine: 1,
                     filled: true,
                     hintText: 'Password',
-                    obscureText: _status,
+                    obscureText: status,
                     isShowLeadingIcon: false,
                     isShowPasswordIcon: true,
                     border: const OutlineInputBorder(),
                     isShowLeadingWidget: false,
                     textEditingController: passwordController,
-                    showPasswordIcon: _status ? Icons.visibility_off_sharp : Icons.visibility,
+                    showPasswordIcon: status ? Icons.visibility_off_sharp : Icons.visibility,
                     validation: (v) {
                       if (ValidationTextForm.isValidPassword(v!) && v.isNotEmpty) {
                         return null;
@@ -118,7 +89,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       }
                     },
                     passwordIconOnTap: () {
-                      setState(() {});
+                      ref.watch(showPasswordIn.notifier).update((state) => !state);
                     },
                   ),
                   SizedBox(
@@ -143,7 +114,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         onPressed: () {
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (context) => const SignUpScreen(),
+                              builder: (context) => SignUpScreen(),
                             ),
                           );
                         },

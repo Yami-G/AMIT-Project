@@ -1,7 +1,9 @@
 import 'package:amit_course1/widgets/validation_row.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../Service/validation_class.dart';
 import '../../shared/resources/images.dart';
@@ -9,13 +11,13 @@ import '../../shared/resources/locales.dart';
 import '../../widgets/elevation_button.dart';
 import '../Navigat_Screens/navigation_bar_screen.dart';
 
-class ForgotScreen extends StatelessWidget {
-  ForgotScreen({Key? key}) : super(key: key);
-  final TextEditingController phoneController = TextEditingController();
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+class ForgotScreen extends HookConsumerWidget {
+  const ForgotScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final TextEditingController phoneController = useTextEditingController();
+    final formKey = useMemoized(() => GlobalKey<FormState>());
     return Scaffold(
       body: Stack(
         children: [

@@ -1,3 +1,5 @@
+import '../Model/user_model.dart';
+
 enum DataType {
   string,
   int,
@@ -16,6 +18,9 @@ abstract class AbstractLocalStorage {
   Future<dynamic> restoreData({
     required String key,
     required DataType dataType,
+  });
+  Future<LoginData?> restoreUserData({
+    required String key,
   });
 
   Future<bool> clearData();

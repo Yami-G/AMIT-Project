@@ -1,54 +1,30 @@
-import 'package:amit_course1/widgets/elevation_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+
 import '../../Service/validation_class.dart';
+import '../../widgets/elevation_button.dart';
 import '../../widgets/validation_row.dart';
 import '../Navigat_Screens/navigation_bar_screen.dart';
 
-class SignUpScreen extends StatefulWidget {
-  const SignUpScreen({Key? key}) : super(key: key);
+final showPasswordUp = StateProvider((ref) => true);
+final showRePasswordUp = StateProvider((ref) => true);
+
+class SignUpScreen extends HookConsumerWidget {
+  SignUpScreen({Key? key}) : super(key: key);
+
+  late String? _password;
 
   @override
-  State<SignUpScreen> createState() => _SignUpScreenState();
-}
-
-class _SignUpScreenState extends State<SignUpScreen> {
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController phoneController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  final TextEditingController rePasswordController = TextEditingController();
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  String? _password;
-  bool _status = true;
-
-  statusValue() {
-    _status = !_status;
-  }
-
-  @override
-  void initState() {
-    // LocalStorage();
-    super.initState();
-  }
-
-  @override
-  void setState(VoidCallback fn) {
-    statusValue();
-    super.setState(fn);
-  }
-
-  @override
-  void dispose() {
-    emailController.dispose();
-    phoneController.dispose();
-    passwordController.dispose();
-    passwordController.dispose();
-    rePasswordController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final TextEditingController emailController = useTextEditingController();
+    final TextEditingController phoneController = useTextEditingController();
+    final TextEditingController passwordController = useTextEditingController();
+    final TextEditingController rePasswordController = useTextEditingController();
+    final formKey = useMemoized(() => GlobalKey<FormState>());
+    bool password = ref.watch(showPasswordUp);
+    bool rePassword = ref.watch(showRePasswordUp);
     return Scaffold(
       backgroundColor: Colors.white,
       body: Stack(
@@ -165,13 +141,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           maxLine: 1,
                           filled: true,
                           textLength: 8,
-                          obscureText: _status,
+                          obscureText: password,
                           labelText: 'Password*',
                           isShowLeadingIcon: false,
                           isShowPasswordIcon: true,
                           isShowLeadingWidget: false,
                           textEditingController: passwordController,
-                          showPasswordIcon: _status ? Icons.visibility_off_sharp : Icons.visibility,
+                          showPasswordIcon: password ? Icons.visibility_off_sharp : Icons.visibility,
                           onSave: (v) {},
                           validation: (v) {
                             if (ValidationTextForm.isValidPassword(v!) && v.isNotEmpty && v.length < 9) {
@@ -182,20 +158,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             }
                           },
                           passwordIconOnTap: () {
-                            setState(() {});
+                            ref.watch(showPasswordUp.notifier).update((state) => !state);
                           },
                         ),
                         ValidationRow(
                           maxLine: 1,
                           filled: true,
                           textLength: 8,
-                          obscureText: _status,
+                          obscureText: rePassword,
                           isShowLeadingIcon: false,
                           isShowPasswordIcon: true,
                           isShowLeadingWidget: false,
                           labelText: 'Re type password*',
                           textEditingController: rePasswordController,
-                          showPasswordIcon: _status ? Icons.visibility_off_sharp : Icons.visibility,
+                          showPasswordIcon: rePassword ? Icons.visibility_off_sharp : Icons.visibility,
                           validation: (v) {
                             if (v == _password) {
                               return null;
@@ -204,7 +180,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             }
                           },
                           passwordIconOnTap: () {
-                            setState(() {});
+                            ref.watch(showRePasswordUp.notifier).update((state) => !state);
                           },
                         ),
                       ],
