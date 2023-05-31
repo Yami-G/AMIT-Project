@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import '../../Provider/login_provider.dart';
 import '../../Service/validation_class.dart';
 import '../../shared/resources/images.dart';
 import '../../widgets/elevation_button.dart';
@@ -100,6 +101,7 @@ class SignInScreen extends HookConsumerWidget {
                     text: 'Login',
                     onPressed: () async {
                       if (formKey.currentState!.validate()) {
+                        ref.read(loginProvider(passwordController.text, emailController.text));
                         Navigator.of(context).pushAndRemoveUntil(
                           MaterialPageRoute(builder: (context) => NavigatorScreen()),
                           (route) => false,

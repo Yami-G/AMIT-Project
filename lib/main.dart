@@ -5,7 +5,8 @@ import 'package:amit_course1/shared/resources/locales.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:amit_course1/Screen/Navigat_Screens/navigation_bar_screen.dart';
+
+import 'Screen/sound.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
             GlobalCupertinoLocalizations.delegate,
           ],
           debugShowCheckedModeBanner: false,
-          home: NavigatorScreen(),
+          home: PianoScreen(),
         );
       },
     );

@@ -179,9 +179,7 @@ class SharedPrefsLocalStorage implements AbstractLocalStorage {
   }
 
   @override
-  Future<LoginData?> restoreUserData({
-    required String key,
-  }) async {
+  Future<LoginData?> restoreUserData({required String key}) async {
     return await _tryCatchWrapper(
       () async {
         final String? user = await getMethod(dataType: DataType.string, key: key);
